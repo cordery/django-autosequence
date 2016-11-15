@@ -23,8 +23,6 @@ class AutoSequenceField(IntegerField):
         # unique by default
         kwargs['editable'] = False
 
-        kwargs['max_length'] = kwargs.get('max_length', 50)
-
         # unique_with value can be string or tuple
         self.unique_with = unique_with or ()
         if isinstance(self.unique_with, six.string_types):
