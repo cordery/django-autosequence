@@ -42,9 +42,6 @@ Add the AutoSequenceField to your models like so::
         simple_model = ForeignKey(SimpleModel, on_delete=CASCADE)
         sequence = AutoSequenceField(unique_with=('simple_model', 'name'))
 
-The options are:
-
-AutoSequenceField(start_at: int
 
 Description
 --------
@@ -62,7 +59,9 @@ This behavior may be undesirable in some circumstances however in general this f
 It is non editable and unique, either unique for all rows in the table or unique_with another field or fields in the table.
 
 The following keywords may be passed to AutoSequenceField:
+
 **start_at**: *integer*: the starting number of the sequence, defaults to 1.  Ex:  start_at=100
+
 **unique_with**: *string or tuple of strings*: the name or names of other fields on this model that this sequence will be unique with.  Ex:  unique_with='category'
 
 
