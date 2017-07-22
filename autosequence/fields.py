@@ -45,16 +45,18 @@ class AutoSequenceField(IntegerField):
         return name, path, args, kwargs
 
     def pre_save(self, instance, add):
+        if not add:
+            return getattr(instance, self.attname)
         qs = self.model.objects.all()
         if self.unique_with:
             qs = qs.filter(
                 **{field: getattr(instance, field) for field in self.unique_with}
             )
-        sequence = qs.aggregate(max=Max(self.name))['max']
+        sequence = qs.aggregate(max=Max(self.attname))['max']
         if sequence:
             sequence += 1
         else:
             sequence = self.start_at
-        setattr(instance, self.name, sequence)
+        setattr(instance, self.attname, sequence)
 
         return sequence
