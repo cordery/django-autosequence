@@ -8,6 +8,9 @@ Django AutoSequence
 .. image:: https://travis-ci.org/cordery/django-autosequence.png?branch=master
     :target: https://travis-ci.org/cordery/django-autosequence
 
+.. image:: https://codecov.io/gh/cordery/django-autosequence/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/cordery/django-autosequence
+
 A model field for Django that provides for a configurable automatic sequence of values
 
 Documentation
