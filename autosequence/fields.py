@@ -1,4 +1,6 @@
 # coding: utf-8
+from typing import Union
+
 import six
 from django.db.models import Max
 from django.db.models.fields import IntegerField
@@ -19,7 +21,7 @@ class AutoSequenceField(IntegerField):
 
     """
 
-    def __init__(self, start_at=1, unique_with=None, *args, **kwargs):
+    def __init__(self, start_at: int = 1, unique_with: Union[str, tuple] = None, *args, **kwargs):
         # unique by default
         kwargs['editable'] = False
 
@@ -47,7 +49,9 @@ class AutoSequenceField(IntegerField):
     def pre_save(self, instance, add):
         if not add:
             return getattr(instance, self.attname)
+
         qs = self.model.objects.all()
+
         if self.unique_with:
             qs = qs.filter(
                 **{field: getattr(instance, field) for field in self.unique_with}

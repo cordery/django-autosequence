@@ -13,6 +13,7 @@ version = '0.2.0'
 if sys.argv[-1] == 'publish':
     try:
         import wheel
+
         print("Wheel version: ", wheel.__version__)
     except ImportError:
         print('Wheel library missing. Please run "pip install wheel"')
@@ -33,7 +34,8 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 setup(
     name='django-autosequence',
     version=version,
-    description="""A model field for Django that provides for a configurable automatic sequence of values""",
+    description="""A model field for Django that provides for a configurable automatic sequence 
+    of values""",
     long_description=readme + '\n\n' + history,
     author='Andrew Cordery',
     author_email='cordery@gmail.com',
@@ -43,28 +45,20 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'django>=1.8',
-        'six'
+        'django>=2',
     ],
     license="MIT",
     zip_safe=False,
     keywords='django-autosequence',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Framework :: Django',
-        'Framework :: Django :: 1.8',
-        'Framework :: Django :: 1.9',
-        'Framework :: Django :: 1.10',
-        'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
 )
