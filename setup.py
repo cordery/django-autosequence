@@ -34,8 +34,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 setup(
     name='django-autosequence',
     version=version,
-    description="""A model field for Django that provides for a configurable automatic sequence 
-    of values""",
+    description="""A configurable automatic sequence field for Django models""",
     long_description=readme + '\n\n' + history,
     author='Andrew Cordery',
     author_email='cordery@gmail.com',
