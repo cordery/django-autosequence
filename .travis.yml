@@ -17,7 +17,7 @@ install:
   - make install
 
 # command to run tests using coverage, e.g. python setup.py test
-script: make coverage
+script: make test
 
 after_success:
   - codecov
