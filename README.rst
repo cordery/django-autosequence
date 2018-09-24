@@ -73,9 +73,10 @@ Does the code actually work?
 
 ::
 
-    source <YOURVIRTUALENV>/bin/activate
-    (myenv) $ pip install -r requirements_test.txt
-    (myenv) $ python runtests.py
+    $ pip install pipenv
+    $ pipenv install -d --three
+    $ pytest
+
 
 Credits
 ---------

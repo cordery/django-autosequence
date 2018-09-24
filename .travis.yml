@@ -3,26 +3,21 @@
 language: python
 
 python:
+  - "3.7"
   - "3.6"
-  - "3.5"
-  - "2.7"
 
 env:
-  - DJANGO_VERSION=1.11.2
-  - DJANGO_VERSION=1.10.7
-  - DJANGO_VERSION=1.9.13
-  - DJANGO_VERSION=1.8.18
+  - DJANGO_VERSION=2
 
 before_install:
-  - pip install codecov
+  - pip install codecov pipenv
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
-  - pip install -r requirements_test.txt
-  - pip install -q Django==$DJANGO_VERSION
+  - make install
 
 # command to run tests using coverage, e.g. python setup.py test
-script: coverage run --source autosequence runtests.py
+script: make coverage
 
 after_success:
   - codecov

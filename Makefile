@@ -28,24 +28,24 @@ clean-pyc: ## remove Python file artifacts
 	find . -name '*~' -exec rm -f {} +
 
 lint: ## check style with flake8
-	flake8 autosequence tests
+	pipenv run flake8 autosequence tests
 
 test: ## run tests quickly with the default Python
-	python runtests.py tests
+	pipenv run pytest
 
 test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source autosequence runtests.py tests
-	coverage report -m
-	coverage html
+	pipenv run pytest --cov=autosequence/
+	pipenv run coverage report -m
+	pipenv run coverage html
 	open htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/django-autosequence.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ autosequence
+	pipenv run sphinx-apidoc -o docs/ autosequence
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
@@ -57,3 +57,7 @@ release: clean ## package and upload a release
 sdist: clean ## package
 	python setup.py sdist
 	ls -l dist
+
+install: ## install the package for development and/or testing
+	pipenv install -d --three
+
