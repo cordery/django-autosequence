@@ -44,7 +44,7 @@ Add the AutoSequenceField to your models like so::
 
 
 Description
---------
+-----------
 AutoSequenceField is an AutoField that is available for non primary keys and can be configured with unique_with to have separate sequences based on other model fields.
 
 For example, say you have a model Invoices that tracks Invoices you have issued to different customers and you would like the invoice number to be autoincrementing but unique for each customer.  You would add a field like::
@@ -65,6 +65,19 @@ The following keywords may be passed to AutoSequenceField:
 **unique_with**: *string or tuple of strings*: the name or names of other fields on this model that this sequence will be unique with.  Ex:  unique_with='category'
 
 
+Race Conditions
+---------------
+Due to the simple way this field is implemented (it is not a real SERIAL field), if you will be creating objects concurrently you will need to lock the table before the save.
+
+If you are using postgres try the `helpers.lock_table` context manager like so::
+
+    with lock_table(MyAutoSequenceFieldModel):
+        MyAutoSequenceFieldModel.objects.create(..)
+
+
+This will start a transaction using `transaction.atomic()` and then execute `LOCK TABLE {tbl} IN SHARE ROW EXCLUSIVE MODE` against the model's db_table.
+
+Tests have been added that verify the race condition issue and verify the lock_table solution.
 
 Running Tests
 --------------

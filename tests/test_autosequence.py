@@ -1,7 +1,12 @@
 # coding: utf-8
+import asyncio
+
+import aiohttp
 import pytest
 from django.db import transaction
+from django.urls import reverse
 
+from autosequence.helpers import lock_table
 from tests.models import ModelWithStartAt, ModelWithUnique, ModelWithUniqueCombo, SimpleModel
 
 
@@ -116,3 +121,44 @@ class TestAutoSequenceFieldTransaction:
             b.save()
         assert [1, 2] == list(
             SimpleModel.objects.values_list('sequence', flat=True))
+
+    def test_lock_table(self):
+        with lock_table(SimpleModel):
+            a = SimpleModel()
+            a.save()
+            b = SimpleModel()
+            b.save()
+
+
+@pytest.mark.django_db(transaction=True)
+def test_race_locked(hammer_url):
+    hammer_url('test_race_locked')
+    assert SimpleModel.objects.count() == 100
+
+
+@pytest.mark.django_db(transaction=True)
+def test_race_no_lock(hammer_url):
+    hammer_url('test_race_no_lock')
+    assert SimpleModel.objects.count() < 100
+
+
+@pytest.fixture
+def hammer_url(live_server, event_loop):
+    def _inner(url_name):
+        url = '%s%s' % (live_server.url, reverse(url_name))
+
+        event_loop.set_debug(True)
+
+        async def get_url():
+            async with aiohttp.ClientSession() as client:
+                async with client.post(url) as resp:
+                    text = await resp.text()
+                    assert resp.status == 200, text
+
+        coros = asyncio.gather(
+            *[get_url() for x in range(0, 100)],
+            loop=event_loop,
+        )
+        event_loop.run_until_complete(coros)
+
+    return _inner
