@@ -2,7 +2,8 @@ DEBUG = True
 USE_TZ = True
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_autosequence"
     }
 }
 INSTALLED_APPS = [

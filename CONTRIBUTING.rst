@@ -62,11 +62,11 @@ Ready to contribute? Here's how to set up `django-autosequence` for local develo
 
     $ git clone git@github.com:your_name_here/django-autosequence.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Install your local copy using pipenv. Assuming you have pipenv installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv django-autosequence
     $ cd django-autosequence/
-    $ python setup.py develop
+    $ make install
+    $ pipenv shell
 
 4. Create a branch for local development::
 
