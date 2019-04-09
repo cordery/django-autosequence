@@ -1,7 +1,6 @@
 # coding: utf-8
 from typing import Union
 
-import six
 from django.db.models import Max
 from django.db.models.fields import IntegerField
 
@@ -24,10 +23,12 @@ class AutoSequenceField(IntegerField):
     def __init__(self, start_at: int = 1, unique_with: Union[str, tuple] = None, *args, **kwargs):
         # unique by default
         kwargs['editable'] = False
+        if not unique_with:
+            kwargs.setdefault('unique', True)
 
         # unique_with value can be string or tuple
         self.unique_with = unique_with or ()
-        if isinstance(self.unique_with, six.string_types):
+        if isinstance(self.unique_with, str):
             self.unique_with = (self.unique_with,)
 
         self.start_at = start_at
@@ -41,8 +42,10 @@ class AutoSequenceField(IntegerField):
         if self.start_at != 1:
             kwargs['start_at'] = self.start_at
 
-        if self.unique_with != ():
+        if self.unique_with:
             kwargs['unique_with'] = self.unique_with
+        else:
+            kwargs.setdefault('unique', True)
 
         return name, path, args, kwargs
 
