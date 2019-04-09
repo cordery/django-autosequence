@@ -9,7 +9,8 @@ __all__ = ['AutoSequenceField']
 
 class AutoSequenceField(IntegerField):
     """
-    AutoSequenceField is an AutoField that is available for non primary keys and can be configured
+    AutoSequenceField is an AutoField that is available for non primary keys and can be
+    configured
     with unique_with to have separate sequences based on other model fields.
 
     It is non editable and unique
@@ -20,11 +21,14 @@ class AutoSequenceField(IntegerField):
 
     """
 
-    def __init__(self, start_at: int = 1, unique_with: Union[str, tuple] = None, *args, **kwargs):
+    def __init__(self, start_at: int = 1, unique_with: Union[str, tuple] = None,
+                 unique: bool = True, **kwargs):
         # unique by default
         kwargs['editable'] = False
-        if not unique_with:
-            kwargs.setdefault('unique', True)
+
+        # ...unless we are using unique_with
+        if unique_with:
+            unique = False
 
         # unique_with value can be string or tuple
         self.unique_with = unique_with or ()
@@ -32,11 +36,10 @@ class AutoSequenceField(IntegerField):
             self.unique_with = (self.unique_with,)
 
         self.start_at = start_at
-
-        super(AutoSequenceField, self).__init__(*args, **kwargs)
+        super().__init__(unique=unique, **kwargs)
 
     def deconstruct(self):
-        name, path, args, kwargs = super(AutoSequenceField, self).deconstruct()
+        name, path, args, kwargs = super().deconstruct()
         del kwargs['editable']
 
         if self.start_at != 1:
@@ -45,8 +48,7 @@ class AutoSequenceField(IntegerField):
         if self.unique_with:
             kwargs['unique_with'] = self.unique_with
         else:
-            kwargs.setdefault('unique', True)
-
+            kwargs['unique'] = self._unique
         return name, path, args, kwargs
 
     def pre_save(self, instance, add):

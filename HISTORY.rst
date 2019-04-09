@@ -2,6 +2,11 @@
 
 History
 -------
+0.4.0 (2019-04-09)
+++++++++++++++++++
+
+* Fixed migrations so unique=True/False will correctly be detected by makemigrations.
+
 0.3.0 (2016-11-14)
 ++++++++++++++++++
 

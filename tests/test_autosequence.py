@@ -1,6 +1,6 @@
 # coding: utf-8
 import pytest
-from django.db import transaction, connection
+from django.db import transaction
 
 from tests.models import ModelWithStartAt, ModelWithUnique, ModelWithUniqueCombo, SimpleModel
 
