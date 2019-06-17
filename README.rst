@@ -48,6 +48,7 @@ Description
 AutoSequenceField is an AutoField that is available for non primary keys and can be configured with unique_with to have separate sequences based on other model fields.
 
 For example, say you have a model Invoices that tracks Invoices you have issued to different customers and you would like the invoice number to be autoincrementing but unique for each customer.  You would add a field like::
+
     class Invoice(models.Model):
         customer = models.ForeignKey('Customer')
         invoice_number = AutoSequenceField(unique_with='customer')
@@ -86,18 +87,7 @@ Does the code actually work?
 
 ::
 
-    $ pip install pipenv
-    $ pipenv install -d --three
-    $ pytest
+    $ pip install poetry
+    $ poetry install
+    $ poetry run pytest
 
-
-Credits
----------
-
-Tools used in rendering this package:
-
-*  Cookiecutter_
-*  `cookiecutter-djangopackage`_
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
