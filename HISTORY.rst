@@ -2,6 +2,10 @@
 
 History
 -------
+0.6.0 (2019-06-17)
+++++++++++++++++++
+* Updated deps & switched to poetry/pyproject.toml
+
 0.5.0 (2019-04-09)
 ++++++++++++++++++
 * added helpers.lock_table context manager
