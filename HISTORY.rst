@@ -2,6 +2,10 @@
 
 History
 -------
+0.7.0 (2020-01-22)
+++++++++++++++++++
+* Updated deps to support Django 3
+
 0.6.0 (2019-06-17)
 ++++++++++++++++++
 * Updated deps & switched to poetry/pyproject.toml
