@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-autosequence"
-version = "0.6.0"
+version = "0.7.0"
 description = "A Django model field providing a configurable automatic sequence of values."
 authors = ["Andrew Cordery <cordery@gmail.com>"]
 license = "MIT"
