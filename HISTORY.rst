@@ -2,6 +2,10 @@
 
 History
 -------
+0.7.1 (2022-03-07)
+++++++++++++++++++
+* Added support for Django 4, Python 3.10
+
 0.7.0 (2020-01-22)
 ++++++++++++++++++
 * Updated deps to support Django 3

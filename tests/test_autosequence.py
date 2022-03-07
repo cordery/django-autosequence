@@ -143,7 +143,7 @@ def test_race_no_lock(hammer_url):
 
 
 @pytest.fixture
-def hammer_url(live_server, event_loop):
+def hammer_url(live_server, event_loop:asyncio.AbstractEventLoop):
     def _inner(url_name):
         url = '%s%s' % (live_server.url, reverse(url_name))
 
@@ -156,8 +156,7 @@ def hammer_url(live_server, event_loop):
                     assert resp.status == 200, text
 
         coros = asyncio.gather(
-            *[get_url() for x in range(0, 100)],
-            loop=event_loop,
+            *[get_url() for _ in range(0, 100)],
         )
         event_loop.run_until_complete(coros)
 
